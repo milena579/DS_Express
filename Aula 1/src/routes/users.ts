@@ -20,9 +20,17 @@ router.get('', (req: Request, res: Response) => {
     res.status(200).send(users);
 })
 
-router.get('/usuarios/{id}', (req: Request, res: Response) => {
-    res.status(200).send(`Fazendo um get id no servidor!`);
-})
+router.get('/:id', (req: Request, res: Response) => {
+    const { id } = req.params;
+    const userId = Number(id);  // Convertemos o id para número aqui
+    const user = users.find(item => item.id === userId); // Comparação correta
+
+    if (user) {
+        res.status(200).send(user);
+    } else {
+        res.status(400).send('Esse id não existe');
+    }
+});
 
 router.put('/usuarios/:id', (req: Request, res: Response) => {
     const { id } = req.params;
